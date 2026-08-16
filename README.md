@@ -18,14 +18,7 @@ dsh plugin --profile demo add ./dsh-tool-pdf
 
 The package declares `dsh.bundle`, so `dsh plugin` appends it to the profile's bundle layers automatically.
 
-> **Git installs build from source.** A `github:` install fetches source, so it runs this package's `prepare` script to build `dist/`. pnpm ≥ 10 blocks that build until you allow it — the first `add` prints the exact key to copy into the profile's `pnpm-workspace.yaml`:
->
-> ```yaml
-> allowBuilds:
->   dsh-tool-pdf: true
-> ```
->
-> Then re-run the `add`. Only allow packages whose source you trust; the build runs on your machine at install time.
+The built `dist/index.mjs` is committed to this repo, so a git install needs no build step and no `allowBuilds` approval.
 
 ## Usage
 
@@ -60,7 +53,7 @@ To change them, override the row in your profile's `cordis.patch.yml` (a patch r
 
 ```sh
 pnpm install
-pnpm build        # tsdown bundles src/*.ts → dist/index.mjs
+pnpm build        # tsdown bundles src/*.ts → dist/index.mjs (committed)
 ```
 
 Structure:
