@@ -1,0 +1,9 @@
+# Insert the read_pdf tool into the host composition.
+#
+# The row's `name` is this package's own name, so Node resolves it from the
+# profile's node_modules after `dsh plugin add` installs it. The plugin only
+# registers on ctx.tools (and reads ctx.fs), so it needs no isolate realm and
+# composes beside the built-in filesystem tools.
+- insert:
+    - id: tool-pdf
+      name: dsh-tool-pdf

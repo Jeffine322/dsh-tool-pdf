@@ -1,0 +1,32 @@
+{
+  "name": "dsh-tool-pdf",
+  "version": "0.1.0",
+  "description": "A read_pdf plugin for DeepSeek Harness: extract text from PDF files, page by page",
+  "type": "module",
+  "main": "dist/index.mjs",
+  "files": [
+    "dist",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "prepare": "tsdown",
+    "build": "tsdown",
+    "dev": "tsdown --watch"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "unpdf": "^1.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.0"
+  },
+  "license": "MIT"
+}
