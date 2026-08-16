@@ -56,6 +56,27 @@ dsh plugin --profile <name> add ./dsh-tool-pdf
 
 The package declares `dsh.bundle`, so `dsh plugin` appends it to the profile's bundle layers automatically. The built `dist/index.mjs` is committed to this repo, so a git install needs no build step and no `allowBuilds` approval.
 
+## How it works
+
+PDF is a binary format, not plain text: a page's visible characters are stored as **glyph codes** in a content stream, mapped back to Unicode through each font's encoding table. The built-in `read` tool therefore refuses PDFs as binary — `read_pdf` decodes them.
+
+Parsing is delegated to [unpdf](https://github.com/unjs/unpdf), which bundles Mozilla's [PDF.js](https://mozilla.github.io/pdf.js/) (the engine Firefox uses), so this plugin never touches PDF's binary internals. The pipeline is:
+
+```text
+read_pdf({ file_path })
+  → extension gate (must be .pdf)
+  → ctx.fs.resolve + stat            # regular file; missing/dir → typed error
+  → ctx.fs.readBytes(…, maxFileBytes)  # obeys workspace/sandbox policy
+  → re-view as plain Uint8Array      # pdf.js rejects a Node Buffer
+  → getDocumentProxy(bytes)          # load the document
+  → extractText(pdf, { mergePages: false })  # text per page
+  → capPages(…, maxOutputChars)      # bound the total output
+  → formatPdfReadOutput(…)           # <path>/<pages>/<content> envelope
+  → return text to the model + emit fs/observed
+```
+
+Two bounds keep a large PDF from blowing up the model context: `maxFileBytes` (the file read) and `maxOutputChars` (the extracted text). It extracts plain text only — no layout, tables, or images (see [Limitations](#limitations)).
+
 ## Config
 
 | Field | Default | Meaning |
