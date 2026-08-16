@@ -10,7 +10,7 @@ Requires a `dsh` installation with the `dsh` CLI on your PATH.
 
 ```sh
 # From this repo's git URL
-dsh plugin --profile demo add github:YOUR_USERNAME/dsh-tool-pdf
+dsh plugin --profile demo add github:Jeffine322/dsh-tool-pdf
 
 # Or from a local checkout
 dsh plugin --profile demo add ./dsh-tool-pdf
@@ -60,7 +60,7 @@ To change them, override the row in your profile's `cordis.patch.yml` (a patch r
 
 ```sh
 pnpm install
-pnpm build        # tsdown bundles src/*.ts → dist/index.js
+pnpm build        # tsdown bundles src/*.ts → dist/index.mjs
 ```
 
 Structure:
