@@ -1,13 +1,14 @@
 {
   "name": "dsh-tool-pdf",
   "version": "0.1.0",
-  "description": "A read_pdf plugin for DeepSeek Harness: extract text from PDF files, page by page",
+  "description": "DeepSeek Harness (dsh) plugin — read_pdf tool for PDF text extraction. Read and extract text from PDF files with AI agents / LLM tools, built on PDF.js (unpdf).",
   "type": "module",
   "main": "dist/index.mjs",
   "files": [
     "dist",
     "cordis.patch.yml",
-    "README.md"
+    "README.md",
+    "README.zh.md"
   ],
   "dsh": {
     "bundle": {

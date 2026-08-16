@@ -1,8 +1,12 @@
 # dsh-tool-pdf
 
-A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that adds a **`read_pdf` tool**: lets the model extract text from a PDF file, page by page.
+English | [中文](README.zh.md)
 
-Built on [unpdf](https://github.com/unjs/unpdf) (a serverless build of Mozilla PDF.js). It reads PDF bytes through the harness filesystem seam (`ctx.fs`), so it obeys the same workspace and sandbox policy as the built-in `read` tool.
+A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) (`dsh`) plugin that adds a **`read_pdf` tool** for **PDF text extraction** — lets an AI agent (LLM) read, extract, and summarize PDF files, page by page.
+
+Built on [unpdf](https://github.com/unjs/unpdf) (a serverless build of Mozilla [PDF.js](https://mozilla.github.io/pdf.js/)). It reads PDF bytes through the harness filesystem seam (`ctx.fs`), so it obeys the same workspace and sandbox policy as the built-in `read` tool.
+
+**Keywords:** DeepSeek Harness · dsh · dsh plugin · read_pdf · PDF reader · PDF text extraction · extract text from PDF · AI agent tool · LLM tool · PDF.js · unpdf
 
 > **`read_pdf` is a model-facing tool, not a UI button.** It does not appear as a menu item or a settings entry. It shows up in the conversation when the model actually reads a PDF — you trigger it by asking the model to read one.
 
