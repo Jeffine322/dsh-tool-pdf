@@ -1,36 +1,60 @@
 # dsh-tool-pdf
 
-A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that adds a `read_pdf` tool: extract text from a PDF file, page by page.
+A [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin that adds a **`read_pdf` tool**: lets the model extract text from a PDF file, page by page.
 
 Built on [unpdf](https://github.com/unjs/unpdf) (a serverless build of Mozilla PDF.js). It reads PDF bytes through the harness filesystem seam (`ctx.fs`), so it obeys the same workspace and sandbox policy as the built-in `read` tool.
 
-## Install
+> **`read_pdf` is a model-facing tool, not a UI button.** It does not appear as a menu item or a settings entry. It shows up in the conversation when the model actually reads a PDF — you trigger it by asking the model to read one.
+
+## Quick start
+
+### 1. Install into the `web` profile
+
+`dsh web` boots the **`web` profile**, so install the plugin there (not into a new profile):
+
+```sh
+dsh plugin --profile web add github:Jeffine322/dsh-tool-pdf
+```
+
+### 2. Start the Web UI
+
+```sh
+dsh web
+```
+
+### 3. Configure a model and a workspace
+
+In the browser: **Settings → Models** (enter your DeepSeek API key, then save), then **Choose workspace** and select the directory that contains your PDFs.
+
+### 4. Ask the model to read a PDF
+
+Start a session and say:
+
+> Read `/path/to/report.pdf` and summarize it.
+
+The model calls `read_pdf({ file_path: "/path/to/report.pdf" })`, and you see the extracted text in the conversation.
+
+### Verify it is installed
+
+```sh
+dsh web --dump-config
+```
+
+If the output contains a `tool-pdf` row (`- id: tool-pdf`, `name: dsh-tool-pdf`), the plugin is mounted.
+
+## Install details
 
 Requires a `dsh` installation with the `dsh` CLI on your PATH.
 
 ```sh
 # From this repo's git URL
-dsh plugin --profile demo add github:Jeffine322/dsh-tool-pdf
+dsh plugin --profile <name> add github:Jeffine322/dsh-tool-pdf
 
 # Or from a local checkout
-dsh plugin --profile demo add ./dsh-tool-pdf
+dsh plugin --profile <name> add ./dsh-tool-pdf
 ```
 
-The package declares `dsh.bundle`, so `dsh plugin` appends it to the profile's bundle layers automatically.
-
-The built `dist/index.mjs` is committed to this repo, so a git install needs no build step and no `allowBuilds` approval.
-
-## Usage
-
-Boot the profile and ask the model to read a PDF:
-
-```sh
-dsh --profile demo
-```
-
-> Read `/path/to/report.pdf` and summarize it.
-
-The model calls `read_pdf({ file_path: "/path/to/report.pdf" })` and receives the extracted text.
+The package declares `dsh.bundle`, so `dsh plugin` appends it to the profile's bundle layers automatically. The built `dist/index.mjs` is committed to this repo, so a git install needs no build step and no `allowBuilds` approval.
 
 ## Config
 
